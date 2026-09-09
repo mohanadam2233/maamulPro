@@ -1,0 +1,44 @@
+.pos-page { background: #fff; font-family: Arial, sans-serif; }
+.pos-avatar { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #dbeafe; background: #64748b; color: white; }
+.pos-page .pos-workspace { grid-template-columns: minmax(0, 40fr) minmax(0, 57fr); min-height: 100dvh; gap: 24px; padding: 53px 12px 12px; }
+.pos-page .pos-pane { min-width: 0; min-height: 526px; background: white; }
+.pos-page .pos-pane > header { gap: 24px; border-bottom: 0; padding: 8px; }
+.pos-page .pos-pane input, .pos-page .pos-pane select { font-size: 11px; font-weight: 400; height: 28px; border-radius: 2px; padding: 0 10px; }
+.pos-page .pos-pane header label > span { height: 28px; width: 30px; border-radius: 0; }
+.pos-page .pos-catalog { height: calc(100dvh - 106px); min-height: 400px; scrollbar-gutter: stable; }
+.pos-page .pos-product { height: 162px; min-height: 162px; padding: 10px; }
+.pos-page .pos-product > span:first-child { font-size: 9px; padding: 3px 7px; }
+.pos-page .pos-product > span.mx-auto { margin-top: 24px; width: 51px; height: 51px; }
+.pos-page .pos-product b { display: -webkit-box; font-size: 11px; margin-top: 10px; min-height: 24px; }
+.pos-page .pos-product strong { font-size: 15px; margin-top: 6px; }
+.pos-page .pos-cart { min-height: 205px; }
+.pos-page .pos-cart table { table-layout: fixed; min-width: 530px; }
+.pos-page .pos-cart th { background: #337fb5; color: white; padding: 8px 7px; border-right: 1px solid #dbeafe; font-size: 11px; text-align: left; }
+.pos-page .pos-cart th:first-child { width: 34%; }
+.pos-page .pos-cart th:nth-child(2) { width: 28%; }
+.pos-page .pos-cart th:last-child { width: 35px; }
+.pos-page .pos-cart td { white-space: normal; padding: 7px; font-size: 11px; }
+.pos-page .pos-payment { border-top: 0; padding: 14px 7% 24px 4%; gap: 30px; }
+.pos-page .pos-payment > div:first-child { display: flex; flex-direction: column; gap: 12px; }
+.pos-page .pos-payment > div:first-child > label { margin: 0; grid-template-columns: 105px minmax(0, 1fr); font-weight: 400; font-size: 11px; }
+.pos-page .pos-note { min-height: 44px; height: 44px; width: 100%; font-size: 12px; }
+.pos-page .pos-payment > div:nth-child(2) { display: flex; flex-direction: column; gap: 12px; }
+.pos-page .pos-payment > div:nth-child(2) > div { margin: 0; gap: 14px; }
+.pos-page .pos-payment > div:nth-child(2) input { width: 65%; min-width: 0; text-align: left; }
+.pos-page .pos-payment b { font-size: 14px; white-space: nowrap; }
+.pos-page .pos-reference { width: 100%; }
+.pos-page .pos-footer { padding: 8px; }
+.pos-page .pos-footer button { height: 29px; border-radius: 3px; padding: 0 25px; font-size: 11px; }
+.dark-mode .pos-page, .dark-mode .pos-page .pos-pane { background: #0f172a; }
+@media (max-width: 1000px) {
+  .pos-page .pos-workspace { grid-template-columns: 1fr; }
+  .pos-page .pos-catalog { height: 350px; min-height: 0; }
+  .pos-page .pos-pane { min-height: 0; }
+  .pos-page .pos-cart { min-height: 220px; }
+}
+@media (max-width: 600px) {
+  .pos-page .pos-pane > header { gap: 8px; }
+  .pos-page .pos-payment { grid-template-columns: 1fr; padding: 15px; }
+  .pos-page .pos-footer { gap: 8px; flex-wrap: wrap; }
+  .pos-page .pos-footer button { padding: 0 15px; height: 36px; }
+}

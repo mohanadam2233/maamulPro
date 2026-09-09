@@ -1,0 +1,22 @@
+.settlement-page { font: 12px Arial, sans-serif; color: #172033; }
+.settlement-page [hidden] { display: none; }
+.settlement-page > div:first-child { background: white; border: 1px solid #d2d6de; border-bottom: 0; padding: 8px; margin: 0; }
+.settlement-page h1 { font-size: 14px; font-weight: 400; margin: 7px 0 0; }
+.settlement-page section { border-top: 0; padding: 9px; border-radius: 0 0 2px 2px; }
+.settlement-page input, .settlement-page select { height: 28px; font-size: 11px; border-radius: 2px; padding: 0 8px; }
+.settlement-page button { font-size: 11px; height: 28px; border-radius: 2px; }
+.settlement-page button svg { width: 13px; height: 13px; }
+.settlement-page button[aria-pressed=true] { outline: 2px solid #172033; outline-offset: 2px; }
+.settlement-page table { font-size: 11px; }
+.settlement-page th { background: #247db8; color: white; font-size: 11px; padding: 8px; text-transform: none; }
+.supplier-workspace thead.bg-green-100 th { background: #dff0d8; color: #172033; }
+.settlement-page td { white-space: normal; padding: 6px 8px; border-color: #d5d5d5; font-size: 11px; }
+.settlement-page tbody tr { background: #f8f8f8; }
+.settlement-page tbody tr:nth-child(even) { background: #f1efef; }
+.settlement-page input[readonly] { background: #ededed; }
+.settlement-page footer, .settlement-page label { font-size: 11px; }
+.settlement-page section > .grid { gap: 24px; }
+.dark-mode .settlement-page > div:first-child { background: #142238; border-color: #334155; }
+.dark-mode .settlement-page tbody tr { background: #142238; }.dark-mode .settlement-page tbody tr:nth-child(even) { background: #1e293b; }
+.dark-mode .settlement-page input[readonly] { background: #334155; }
+@media(min-width:1024px) { .settlement-page section > form, .settlement-page section > .grid { grid-template-columns: 1fr 1fr 1fr; }.settlement-page section > form button, .settlement-page section > .grid > button { justify-self: start; } }

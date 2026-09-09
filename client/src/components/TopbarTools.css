@@ -1,0 +1,17 @@
+.mp-whatsapp { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 30px; height: 30px; padding: 4px; border-radius: 50%; color: white; background: #16b953; text-decoration: none; }
+.mp-whatsapp:hover { background: #0b9640; }
+.mp-whatsapp:focus-visible, .mp-notify:focus-visible { outline: 2px solid #7dd3fc; outline-offset: 3px; }
+.mp-notify { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: transparent; border: 0; color: inherit; }
+.mp-notify .mp-badge { display: block; position: absolute; top: -4px; right: -5px; min-width: 15px; padding: 1px 3px; border-radius: 3px; background: #f59e0b; color: #172033; font-size: 9px; font-weight: 800; }
+.mp-alert-panel { position: fixed; z-index: 150; top: 66px; right: 12px; width: min(360px, calc(100vw - 24px)); border: 1px solid #dbe3ef; border-radius: 8px; background: white; color: #172033; box-shadow: 0 12px 35px #0f172a30; font-size: 13px; }
+.mp-alert-panel header { display: flex; justify-content: space-between; align-items: center; padding: 13px; border-bottom: 1px solid #e2e8f0; }
+.mp-alert-panel button { background: transparent; border: 0; color: inherit; }
+.mp-alert-panel p { margin: 0; padding: 13px; }
+.mp-alert-list { max-height: min(350px, 55vh); overflow-y: auto; }
+.mp-alert-list a { display: grid; gap: 5px; padding: 12px; border-top: 1px solid #e2e8f0; text-decoration: none; color: inherit; }
+.mp-alert-list a:hover { background: #eff6ff; }
+.mp-alert-list small { color: #b45309; }
+.mp-alert-all { display: block; padding: 13px; color: #2563eb; border-top: 1px solid #e2e8f0; }
+.dark-mode .mp-alert-panel { background: #142238; color: #e2e8f0; border-color: #334155; }
+.dark-mode .mp-alert-list a:hover { background: #1e293b; }
+.dark-mode .mp-alert-list small { color: #fbbf24; }
