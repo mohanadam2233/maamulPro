@@ -28,6 +28,7 @@ app.use(cookieParser());
 app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use('/api/v1/auth', rateLimit({ windowMs: 15 * 60 * 1000, limit: 100, standardHeaders: true, legacyHeaders: false }), authRoutes);
 app.get('/api/v1/health', (_req, res) => res.json({ success: true, service: 'maamulpro-api', timestamp: new Date().toISOString() }));
+app.get('/', (_req, res) => res.redirect('/api/v1/health'));
 app.use('/api/v1/platform', authenticate, platformRoutes);
 
 const tenantRouter = express.Router();
