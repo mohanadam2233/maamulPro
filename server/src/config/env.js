@@ -8,7 +8,7 @@ const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(5000),
   CLIENT_URL: z.string().url().default('http://localhost:5173'),
-  MONGODB_URI: z.string().min(1).default('mongodb://127.0.0.1:27017/maamulpro'),
+  MONGODB_URI: z.string().min(1,"MONGODB_URI is required"),
   JWT_ACCESS_SECRET: z.string().min(32).default(developmentAccessSecret),
   JWT_REFRESH_SECRET: z.string().min(32).default(developmentRefreshSecret),
   ACCESS_TOKEN_MINUTES: z.coerce.number().positive().default(15),

@@ -40,7 +40,7 @@ router.get('/', asyncHandler(async (req, res) => {
   const topCustomers = await getTopCustomers(req.tenantId);
   res.json({ success: true, data: {
     metrics: {
-      dailyInvoice: daily.total, customers: customerCount, purchaseToday: todayPurchases[0]?.total || 0, inventory: productStats[0]?.units || 0,
+      dailyInvoice: daily.total, customers: customerCount, purchaseToday: todayPurchases[0]?.total || 0, inventory: productStats[0]?.products  || 0,
       paymentToday: paymentsToday[0]?.total || 0, allExpense: expensesToday[0]?.total || 0, allInvoice: await Sale.countDocuments({ tenantId }),
       vendors: vendorCount, topCustomers: topCustomers.length, receiptToday: receiptsToday[0]?.total || 0, expenseToday: expensesToday[0]?.total || 0, users: userCount,
     },
