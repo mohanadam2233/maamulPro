@@ -42,12 +42,6 @@ Open `http://localhost:8080`. The React application is built into static product
 
 The Docker MongoDB configuration enables the replica set needed for safe sales transactions.
 
-## Seeded development accounts
-
-Run `npm run seed`, then use:
-
-- Platform Super Admin: `owner@maamulpro.com` / `Admin@12345`
-- Demo Business Admin: `admin@demo.maamulpro.com` / `Demo@12345`
 
 These credentials are development-only. Replace them before any deployment.
 
