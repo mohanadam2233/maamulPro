@@ -1,80 +1,97 @@
 # MaamulPro
 
-MaamulPro is a multi-tenant MERN business-management and POS application. It includes a platform owner console, subscription payment approval, tenant account control, secure authentication, dashboard analytics, products and stock, customer credit control, VAT-aware sales/invoices, supplier purchases, customer receipts, supplier payments, vendors, expenses, users, billing, reports, and printable barcode labels.
+MaamulPro is a modern business management and Point of Sale (POS) system.
 
-## Stack
+It helps businesses manage sales, products, inventory, customers, suppliers, payments, expenses, users and reports from one platform.
 
-- React + Vite, Redux Toolkit/RTK Query, Recharts, Lucide
-- Node.js + Express
-- MongoDB + Mongoose
-- JWT access token + rotating HttpOnly refresh cookie
+## Main Features
 
-## Quick start
+- Business dashboard
+- Point of Sale (POS)
+- Sales and invoices
+- Printable receipts
+- Product management
+- Automatic barcode generation
+- Inventory and stock control
+- Low-stock notifications
+- Customer management
+- Supplier management
+- Purchases
+- Customer receipts
+- Supplier payments
+- Expense management
+- Business reports
+- User and role management
+- English and Somali languages
+- Light and dark modes
+- Mobile, tablet and desktop support
 
-### Requirements
+## User Roles
 
-- Node.js 20 or newer
-- MongoDB replica set (transactions are used by checkout), or Docker Desktop
+MaamulPro supports different user roles:
 
-### Local setup
+- Super Admin
+- Business Admin
+- Branch Manager
+- Accountant
+- Cashier
+- Storekeeper
+- Auditor
 
-```bash
-npm install
-cp .env.example .env
-npm run seed
-npm run dev
-```
+Each user can only access the features allowed for their role.
 
-Frontend: `http://localhost:5173`  
-API: `http://localhost:5000/api/v1`  
-Health: `http://localhost:5000/api/v1/health`
+## Super Admin Platform
 
-### Local Docker production build
+The Super Admin can:
 
-```bash
-cp .env.production.example .env
-# Replace both JWT secrets in .env before starting.
-docker compose up --build -d
-docker compose exec api npm run seed --workspace=server
-```
+- Manage registered businesses
+- Activate subscriptions
+- Extend subscriptions
+- Suspend or restore businesses
+- Review platform activity
 
-Open `http://localhost:8080`. The React application is built into static production assets and served by Nginx; `/api` is proxied to Express.
+Subscription management is not visible to normal business users.
 
-The Docker MongoDB configuration enables the replica set needed for safe sales transactions.
+## Technology
 
+MaamulPro is built with:
 
-These credentials are development-only. Replace them before any deployment.
+- React
+- Tailwind CSS
+- Redux Toolkit
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT authentication
+- Docker
 
-## Important behavior
+## Security
 
-- Every business record is scoped by the authenticated user's `tenantId`.
-- Client-supplied tenant IDs are ignored.
-- Tenant write operations require an active or trial subscription.
-- Billing remains available when a tenant is suspended so an admin can submit payment.
-- The Platform Super Admin can approve/reject payments and suspend/restore accounts.
-- Checkout is transactional: the invoice and stock deduction succeed or fail together.
-- Customer credit is validated before partial or unpaid invoices are accepted.
-- VAT, discounts, paid totals, and balances are calculated on the server.
-- Partial and unpaid purchases create supplier balances; supplier payments reduce those balances.
-- Customer receipts reduce customer balances and prevent overpayment.
-- Business payments and SaaS subscription payments use separate APIs and records.
-- Users enter normal dollar values such as `1.50`; money is stored as integer minor units for accuracy.
+The system includes:
 
-## Verification
+- Secure login
+- Password encryption
+- Role-based access
+- Business data separation
+- Protected API routes
+- Secure authentication tokens
+- Login rate limiting
 
-```bash
-npm run build
-npm test
-npm run check -w server
-```
+## Responsive Design
 
-## Production checklist
+MaamulPro works on:
 
-- Use strong unique JWT secrets and a managed MongoDB replica set.
-- Set `CLIENT_URL` to the exact HTTPS application origin.
-- Configure HTTPS and a strict production CORS origin.
-- Replace development accounts and remove seed credentials.
-- Add object storage before enabling payment evidence uploads.
-- Add email/SMS provider credentials for reminders.
-- Add automated database backups and restore tests.
-- Run an external security assessment before handling real financial data.
+- Desktop computers
+- Laptops
+- Tablets
+- Android phones
+- iPhones
+
+## Project Status
+
+MaamulPro is currently under active development and testing.
+
+---
+
+**MaamulPro — Manage your business from one place.**
