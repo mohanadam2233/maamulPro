@@ -11,7 +11,6 @@ const ResourcePage = lazy(() => import('./pages/ResourcePage.jsx'));
 const Sales = lazy(() => import('./pages/Sales.jsx'));
 const Purchases = lazy(() => import('./pages/Purchases.jsx'));
 const Users = lazy(() => import('./pages/UsersList.jsx'));
-const Billing = lazy(() => import('./pages/Billing.jsx'));
 const Platform = lazy(() => import('./pages/Platform.jsx'));
 const Reports = lazy(() => import('./pages/Reports.jsx'));
 const Inventory = lazy(() => import('./pages/Inventory.jsx'));
@@ -78,7 +77,6 @@ export default function App() {
       <Route path="vendors" element={<ContactDirectory key="vendors" resource="vendors" />} />
       <Route path="customers/top" element={<ContactDirectory key="top" resource="customers" top />} />
       <Route path="users" element={<Users />} />
-      <Route path="billing" element={<Billing />} />
       <Route path="reports" element={<Reports />} />
       <Route path="platform" element={<Protected superOnly><Platform /></Protected>} />
     </Route>

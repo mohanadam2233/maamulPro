@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
   tenantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tenant', index: true, default: null },
   name: { type: String, required: true, trim: true },
   phone: { type: String, trim: true, default: '' },
+  avatarDataUrl: { type: String, default: '' },
   username: { type: String, required: true, unique: true, lowercase: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true, trim: true },
   password: { type: String, required: true, select: false },

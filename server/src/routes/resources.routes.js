@@ -23,11 +23,12 @@ const stockManagers = allowRoles('BUSINESS_ADMIN', 'BRANCH_MANAGER', 'ACCOUNTANT
 // Tenant-scoped stock alerts; the badge is the real count, not a placeholder.
 productRoutes.get('/alerts', asyncHandler(async (req, res) => {
   const filter = { tenantId: req.tenantId, isActive: true, $expr: { $lte: ['$stock', '$minimumStock'] } };
-  const [items, total] = await Promise.all([
+  const [items, total, outOfStock] = await Promise.all([
     Product.find(filter).select('name stock minimumStock').sort({ stock: 1, name: 1 }).limit(20).lean(),
     Product.countDocuments(filter),
+    Product.countDocuments({ ...filter, stock: { $lte: 0 } }),
   ]);
-  res.json({ success: true, data: items, meta: { total } });
+  res.json({ success: true, data: items, meta: { total, outOfStock } });
 }));
 const stockAdjustmentSchema = z.object({ adjustment: z.number().int().refine((value) => value !== 0), reason: z.string().trim().min(2).max(250) });
 

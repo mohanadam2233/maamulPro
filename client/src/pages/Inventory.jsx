@@ -1,7 +1,7 @@
 import { useDeferredValue, useState } from 'react';
 import {
   Barcode, Boxes, CalendarDays, ChevronDown, ChevronLeft, ChevronRight,
-  Edit3, PackagePlus, Plus, Printer, Save, SlidersHorizontal,
+  Edit3, PackagePlus, Plus, Printer, RefreshCw, Save, SlidersHorizontal,
   Tag, Trash2, Weight, X,
 } from 'lucide-react';
 import { useSelector } from 'react-redux';
@@ -16,6 +16,16 @@ const emptyItem = {
   barcode: '', minimumStock: '0', expiresAt: '',
 };
 const money = (minor = 0) => `$${(minor / 100).toFixed(2)}`;
+
+// Creates a valid EAN-13 value. A new one is generated whenever Add Product opens.
+export function generateBarcode() {
+  const random = globalThis.crypto?.getRandomValues
+    ? globalThis.crypto.getRandomValues(new Uint32Array(1))[0]
+    : Math.floor(Math.random() * 1_000_000_000);
+  const firstTwelve = `${Date.now()}${random}`.replace(/\D/g, '').slice(-12).padStart(12, '0');
+  const sum = [...firstTwelve].reduce((total, digit, index) => total + Number(digit) * (index % 2 === 0 ? 1 : 3), 0);
+  return `${firstTwelve}${(10 - (sum % 10)) % 10}`;
+}
 const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (character) => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
 }[character]));
@@ -106,7 +116,7 @@ export default function Inventory() {
   const announce = (type, message) => setNotice({ type, message });
 
   const openAdd = () => {
-    setForm({ ...emptyItem, category: options.categories?.[0] || 'General', unit: options.units?.[0] || 'Piece' });
+    setForm({ ...emptyItem, barcode: generateBarcode(), category: options.categories?.[0] || 'General', unit: options.units?.[0] || 'Piece' });
     setModal({ type: 'item', item: null });
     setNotice({ type: '', message: '' });
   };
@@ -283,7 +293,7 @@ export default function Inventory() {
             <Field label="Opening Stock" icon={Boxes} required><input required disabled={Boolean(modal.item)} min="0" step="1" type="number" value={form.stock} onChange={(event) => setForm({ ...form, stock: event.target.value })} className={`${inputClass} disabled:bg-slate-100 disabled:text-slate-400 dark:disabled:bg-slate-950`} /></Field>
             <Field label="Cost Price" required><input required min="0" step="0.01" type="number" value={form.cost} onChange={(event) => setForm({ ...form, cost: event.target.value })} className={inputClass} /></Field>
             <Field label="Sale Price" required><input required min="0" step="0.01" type="number" value={form.price} onChange={(event) => setForm({ ...form, price: event.target.value })} className={inputClass} /></Field>
-            <Field label="Barcode" icon={Barcode} required><input required value={form.barcode} onChange={(event) => setForm({ ...form, barcode: event.target.value })} className={inputClass} /></Field>
+            <Field label="Barcode" icon={Barcode} required><div className="flex gap-2"><input required inputMode="numeric" value={form.barcode} onChange={(event) => setForm({ ...form, barcode: event.target.value.replace(/\D/g, '') })} className={inputClass} /><button type="button" onClick={() => setForm((current) => ({ ...current, barcode: generateBarcode() }))} className="grid h-11 w-11 shrink-0 place-items-center rounded bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-slate-800 dark:text-cyan-300" title="Generate another barcode" aria-label="Generate another barcode"><RefreshCw className="h-4 w-4" /></button></div></Field>
             <Field label="Minimum Qty"><input required min="0" step="1" type="number" value={form.minimumStock} onChange={(event) => setForm({ ...form, minimumStock: event.target.value })} className={inputClass} /></Field>
             <Field label="Expire Date" icon={CalendarDays}><input type="date" value={form.expiresAt} onChange={(event) => setForm({ ...form, expiresAt: event.target.value })} className={inputClass} /></Field>
             {notice.type === 'error' && <div className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-700 md:col-span-3 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300">{notice.message}</div>}

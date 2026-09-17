@@ -74,4 +74,52 @@ router.post('/tenants/:id/status', asyncHandler(async (req, res) => {
   res.json({ success: true, data: tenant });
 }));
 
+router.patch('/tenants/:id/subscription', asyncHandler(async (req, res) => {
+  const input = z.object({
+    action: z.enum(['ACTIVATE', 'EXTEND', 'SUSPEND', 'CANCEL']),
+    months: z.number().int().min(1).max(60).default(1),
+    amountMinor: z.number().int().min(0).default(0),
+    currency: z.string().length(3).default('USD'),
+    reason: z.string().trim().min(3).max(250),
+  }).parse(req.body);
+  const tenant = await Tenant.findById(req.params.id);
+  if (!tenant) throw new AppError(404, 'Tenant not found', 'NOT_FOUND');
+  const current = await Subscription.findOne({ tenantId: tenant._id });
+  const before = current?.toObject() || null;
+  const now = new Date();
+  const update = { amountMinor: input.amountMinor, currency: input.currency.toUpperCase() };
+
+  if (input.action === 'ACTIVATE' || input.action === 'EXTEND') {
+    const start = input.action === 'EXTEND' && current?.expiresAt > now ? new Date(current.expiresAt) : now;
+    const end = new Date(start);
+    end.setMonth(end.getMonth() + input.months);
+    const grace = new Date(end);
+    grace.setDate(grace.getDate() + 7);
+    Object.assign(update, { status: 'ACTIVE', startsAt: now, expiresAt: end, graceEndsAt: grace });
+    tenant.status = 'ACTIVE';
+  } else if (input.action === 'SUSPEND') {
+    update.status = 'SUSPENDED';
+    tenant.status = 'SUSPENDED';
+  } else {
+    update.status = 'CANCELLED';
+    tenant.status = 'PAST_DUE';
+  }
+
+  const subscription = await Subscription.findOneAndUpdate(
+    { tenantId: tenant._id },
+    { $set: update, $setOnInsert: { plan: 'STANDARD' } },
+    { upsert: true, new: true, runValidators: true },
+  );
+  await tenant.save();
+  await writeAudit(req, {
+    action: `SUBSCRIPTION_${input.action}`,
+    entityType: 'Subscription',
+    entityId: subscription._id,
+    before,
+    after: subscription.toObject(),
+    reason: input.reason,
+  });
+  res.json({ success: true, data: { tenant, subscription } });
+}));
+
 export default router;
